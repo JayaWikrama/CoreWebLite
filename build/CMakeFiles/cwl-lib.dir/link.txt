@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC -O3 -DNDEBUG -O3 -shared -Wl,-soname,libcwl.so -o libcwl.so "CMakeFiles/cwl-lib.dir/src/http-code.cpp.o" "CMakeFiles/cwl-lib.dir/src/http-header-node.cpp.o" 
