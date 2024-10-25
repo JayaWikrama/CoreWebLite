@@ -94,6 +94,11 @@ const char *fieldName[] = {
   "Unknown"
 };
 
+/**
+ * @brief Node constructor for Integer data.
+ *
+ * This method is responsible for create new node with integer data value.
+ */
 HeaderNode::HeaderNode(HeaderNode::headerField_t field, int data){
   this->field = field;
   this->vType = HeaderNode::VALUE_TYPE_NUMBER;
@@ -101,6 +106,11 @@ HeaderNode::HeaderNode(HeaderNode::headerField_t field, int data){
   this->next = nullptr;
 }
 
+/**
+ * @brief Node constructor for boolean data.
+ *
+ * This method is responsible for create new node with boolean data value.
+ */
 HeaderNode::HeaderNode(HeaderNode::headerField_t field, bool data){
   this->field = field;
   this->vType = HeaderNode::VALUE_TYPE_BOOLEAN;
@@ -108,6 +118,11 @@ HeaderNode::HeaderNode(HeaderNode::headerField_t field, bool data){
   this->next = nullptr;
 }
 
+/**
+ * @brief Node constructor for cstring data.
+ *
+ * This method is responsible for create new node with cstring data value.
+ */
 HeaderNode::HeaderNode(HeaderNode::headerField_t field, const char *data){
   this->field = field;
   this->vType = HeaderNode::VALUE_TYPE_TEXT;
@@ -120,10 +135,20 @@ HeaderNode::HeaderNode(HeaderNode::headerField_t field, const char *data){
   this->next = nullptr;
 }
 
+/**
+ * @brief Node constructor for string data.
+ *
+ * This method is responsible for create new node with string data value.
+ */
 HeaderNode::HeaderNode(HeaderNode::headerField_t field, const std::string data){
   HeaderNode(field, data.c_str());
 }
 
+/**
+ * @brief Node destructor.
+ *
+ * Release data pointer.
+ */
 HeaderNode::~HeaderNode(){
   if (this->vType == HeaderNode::VALUE_TYPE_TEXT){
     if (this->data != nullptr){
@@ -134,10 +159,24 @@ HeaderNode::~HeaderNode(){
   }
 }
 
+/**
+ * @brief Gets the HTTP Header field name.
+ *
+ * This method is responsible for getting the HTTP Header field name as string.
+ *
+ * @return The HTTP Header field name as string.
+ */
 std::string HeaderNode::getFieldName() const {
   return std::string(fieldName[static_cast<int>(this->field)]);
 }
 
+/**
+ * @brief Gets the HTTP Header field value.
+ *
+ * This method is responsible for getting the HTTP Header field value as string.
+ *
+ * @return The HTTP Header field value as string.
+ */
 std::string HeaderNode::getValue(){
   if (this->vType == HeaderNode::VALUE_TYPE_TEXT){
     return std::string((const char *) (this->data));
@@ -152,6 +191,14 @@ std::string HeaderNode::getValue(){
   return std::string("true");
 }
 
+/**
+ * @brief Parse the HTTP Header node (single row).
+ *
+ * This method is responsible for getting parse the HTTP Header node (single row) to separate field name and field value.
+ *
+ * @return `true` in success.
+ * @return `false` on fail.
+ */
 bool HeaderNode::parseRow(const char *headerRow, HeaderNode::headerField_t &field, std::string &data){
   char fieldX[64];
   int idx = 0;
@@ -191,4 +238,16 @@ bool HeaderNode::parseRow(const char *headerRow, HeaderNode::headerField_t &fiel
   data = std::string(headerRow + idx);
   if (field == HeaderNode::UNKNOWN) return false;
   return true;
+}
+
+/**
+ * @brief Overloading of `parseRow` method.
+ *
+ * This method is responsible for getting parse the HTTP Header node (single row) to separate field name and field value.
+ *
+ * @return `true` in success.
+ * @return `false` on fail.
+ */
+bool HeaderNode::parseRow(const std::string headerRow, HeaderNode::headerField_t &field, std::string &data){
+  return this->parseRow(headerRow.c_str(), field, data);
 }
