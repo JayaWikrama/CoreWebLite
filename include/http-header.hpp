@@ -36,8 +36,13 @@
 
 #include <string> 
 #include "http-header-node.hpp"
+#include "http-code.hpp"
 
 class HTTPHeader {
+  private:
+    std::string version;
+    HttpStatus::Code_t code;
+
   public:
     HeaderNode *node;
 
