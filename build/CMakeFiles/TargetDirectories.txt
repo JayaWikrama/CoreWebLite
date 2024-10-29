@@ -1,9 +1,0 @@
-/home/jayawikrama/Documents/GIT/CoreWebLite/build/CMakeFiles/cwl-lib.dir
-/home/jayawikrama/Documents/GIT/CoreWebLite/build/CMakeFiles/package.dir
-/home/jayawikrama/Documents/GIT/CoreWebLite/build/CMakeFiles/package_source.dir
-/home/jayawikrama/Documents/GIT/CoreWebLite/build/CMakeFiles/edit_cache.dir
-/home/jayawikrama/Documents/GIT/CoreWebLite/build/CMakeFiles/rebuild_cache.dir
-/home/jayawikrama/Documents/GIT/CoreWebLite/build/CMakeFiles/list_install_components.dir
-/home/jayawikrama/Documents/GIT/CoreWebLite/build/CMakeFiles/install.dir
-/home/jayawikrama/Documents/GIT/CoreWebLite/build/CMakeFiles/install/local.dir
-/home/jayawikrama/Documents/GIT/CoreWebLite/build/CMakeFiles/install/strip.dir
