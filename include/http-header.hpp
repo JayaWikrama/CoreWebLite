@@ -143,11 +143,6 @@ class HTTPHeader {
     * @return HTTP Header payload as string
     */
     std::string getPayload();
-
-  private:
-    valueType_t vType;
-    void *data;
-    headerField_t field;
 };
 
 #endif
