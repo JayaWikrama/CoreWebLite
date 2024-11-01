@@ -49,6 +49,7 @@ find_package(GTest REQUIRED)
 set(SOURCE_FILES
     src/http-code.cpp
     src/http-header-node.cpp
+    src/http-header.cpp
 )
 
 # Create a library from common code
