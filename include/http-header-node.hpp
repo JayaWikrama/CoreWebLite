@@ -155,6 +155,14 @@ class HeaderNode {
     HeaderNode(HeaderNode::headerField_t field, const std::string data);
 
     /**
+    * @brief Node constructor for string field and string data.
+    *
+    * This method is responsible for create new node with string field and string data value.
+    * This method will throw an error if input field is not match with available field list.
+    */
+    HeaderNode(const std::string field, const std::string data);
+
+    /**
     * @brief Node destructor.
     *
     * Release data pointer.
