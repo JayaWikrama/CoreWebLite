@@ -36,6 +36,8 @@
 
 #include <string>
 
+extern const char *fieldName[];
+
 class HeaderNode {
   public:
     typedef enum _valueType_t {
