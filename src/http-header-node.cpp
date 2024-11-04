@@ -105,7 +105,19 @@ const char *fieldName[] = {
 HeaderNode::HeaderNode(HeaderNode::headerField_t field, int data){
   this->field = field;
   this->vType = HeaderNode::VALUE_TYPE_NUMBER;
-  this->data = (void *) (size_t) data;
+  this->data = (void *) (ssize_t) data;
+  this->next = nullptr;
+}
+
+/**
+ * @brief Node constructor for Long Integer data.
+ *
+ * This method is responsible for create new node with long integer data value.
+ */
+HeaderNode::HeaderNode(HeaderNode::headerField_t field, long data){
+  this->field = field;
+  this->vType = HeaderNode::VALUE_TYPE_NUMBER;
+  this->data = (void *) (ssize_t) data;
   this->next = nullptr;
 }
 
@@ -145,6 +157,54 @@ HeaderNode::HeaderNode(HeaderNode::headerField_t field, const char *data){
  */
 HeaderNode::HeaderNode(HeaderNode::headerField_t field, const std::string data){
   HeaderNode(field, data.c_str());
+}
+
+/**
+ * @brief Node constructor for string field and string data.
+ *
+ * This method is responsible for create new node with string field and string data value.
+ * This method will throw an error if input field is not match with available field list.
+ */
+HeaderNode::HeaderNode(const std::string field, int data){
+  int i = 0;
+  for (i = 0; i < static_cast<int>(HeaderNode::SZ_TOTAL); i++){
+    if (field.compare(fieldName[i]) == 0){
+      HeaderNode(static_cast<HeaderNode::headerField_t>(i), data);
+    }
+  }
+  if (i == static_cast<int>(HeaderNode::SZ_TOTAL)) throw std::runtime_error(std::string(__func__) + ": fail to create next node");
+}
+
+/**
+ * @brief Node constructor for string field and integer data.
+ *
+ * This method is responsible for create new node with string field and integer data value.
+ * This method will throw an error if input field is not match with available field list.
+ */
+HeaderNode::HeaderNode(const std::string field, long data){
+  int i = 0;
+  for (i = 0; i < static_cast<int>(HeaderNode::SZ_TOTAL); i++){
+    if (field.compare(fieldName[i]) == 0){
+      HeaderNode(static_cast<HeaderNode::headerField_t>(i), data);
+    }
+  }
+  if (i == static_cast<int>(HeaderNode::SZ_TOTAL)) throw std::runtime_error(std::string(__func__) + ": fail to create next node");
+}
+
+/**
+ * @brief Node constructor for string field and long integer data.
+ *
+ * This method is responsible for create new node with string field and long integer data value.
+ * This method will throw an error if input field is not match with available field list.
+ */
+HeaderNode::HeaderNode(const std::string field, bool data){
+  int i = 0;
+  for (i = 0; i < static_cast<int>(HeaderNode::SZ_TOTAL); i++){
+    if (field.compare(fieldName[i]) == 0){
+      HeaderNode(static_cast<HeaderNode::headerField_t>(i), data);
+    }
+  }
+  if (i == static_cast<int>(HeaderNode::SZ_TOTAL)) throw std::runtime_error(std::string(__func__) + ": fail to create next node");
 }
 
 /**

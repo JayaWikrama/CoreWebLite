@@ -134,6 +134,13 @@ class HeaderNode {
     HeaderNode(HeaderNode::headerField_t field, int data);
 
     /**
+    * @brief Node constructor for Long Integer data.
+    *
+    * This method is responsible for create new node with long integer data value.
+    */
+    HeaderNode(HeaderNode::headerField_t field, long data);
+
+    /**
     * @brief Node constructor for boolean data.
     *
     * This method is responsible for create new node with boolean data value.
@@ -153,6 +160,30 @@ class HeaderNode {
     * This method is responsible for create new node with string data value.
     */
     HeaderNode(HeaderNode::headerField_t field, const std::string data);
+
+    /**
+    * @brief Node constructor for string field and string data.
+    *
+    * This method is responsible for create new node with string field and string data value.
+    * This method will throw an error if input field is not match with available field list.
+    */
+    HeaderNode(const std::string field, int data);
+
+    /**
+    * @brief Node constructor for string field and integer data.
+    *
+    * This method is responsible for create new node with string field and integer data value.
+    * This method will throw an error if input field is not match with available field list.
+    */
+    HeaderNode(const std::string field, long data);
+
+    /**
+    * @brief Node constructor for string field and long integer data.
+    *
+    * This method is responsible for create new node with string field and long integer data value.
+    * This method will throw an error if input field is not match with available field list.
+    */
+    HeaderNode(const std::string field, bool data);
 
     /**
     * @brief Node constructor for string field and string data.
