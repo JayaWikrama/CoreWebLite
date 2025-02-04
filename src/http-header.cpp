@@ -22,9 +22,38 @@
  */
 
 #include <cstring>
+#include <unordered_map>
+#include <iomanip>
+#include <ctime>
+#include <iostream>
 #include "http-header.hpp"
 
 #define MAX_HEAD_ROW 2048
+
+std::unordered_map<std::string, std::string> __parse(const std::string &input) {
+  std::unordered_map<std::string, std::string> dataMap;
+  std::istringstream stream(input);
+  std::string line;
+  while (std::getline(stream, line)) {
+    if (line.length() > 512) break;
+    size_t pos = line.find(": ");
+    if (pos != std::string::npos) {
+      std::string key = line.substr(0, pos);
+      std::string value = line.substr(pos + 2);
+      if (!value.empty() && value.back() == '\r') {
+          value.pop_back();
+      }
+      dataMap[key] = value;
+    }
+    else if (line.find("HTTP") == 0) {
+      if (!line.empty() && line.back() == '\r') {
+          line.pop_back();
+      }
+      dataMap["Protocol"] = line;
+    }
+  }
+  return dataMap;
+}
 
 /**
  * @brief Default constructor for NULL node.
