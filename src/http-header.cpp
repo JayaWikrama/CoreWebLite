@@ -30,6 +30,20 @@
 
 #define MAX_HEAD_ROW 2048
 
+
+long convertToUnixEpoch(const std::string &dateStr) {
+  std::tm timeStruct = {};
+  std::istringstream ss(dateStr);
+  ss >> std::get_time(&timeStruct, "%a, %d %b %Y %H:%M:%S GMT");
+  if (ss.fail()) {
+    std::cerr << "Failed to parse date string." << std::endl;
+    return -1;
+  }
+  // Set timezone to GMT
+  timeStruct.tm_isdst = -1;
+  return std::mktime(&timeStruct);
+}
+
 std::unordered_map<std::string, std::string> __parse(const std::string &input) {
   std::unordered_map<std::string, std::string> dataMap;
   std::istringstream stream(input);
