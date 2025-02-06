@@ -115,3 +115,53 @@ HTTPHeader::HTTPHeader(HeaderNode::headerField_t field, const char *data) : HTTP
 HTTPHeader::HTTPHeader(HeaderNode::headerField_t field, const std::string data) : HTTPHeader::HTTPHeader() {
   this->node = new HeaderNode(field, data);
 }
+
+/**
+ * @brief Custom constructor for Complete HTTP Header Payload.
+ *
+ * This method is responsible for create new HTTP Header wich automatically parse the input to linked list form.
+ */
+HTTPHeader::HTTPHeader(const std::string httpHeaderPayload){
+  std::unordered_map<std::string, std::string> parsed = __parse(httpHeaderPayload);
+  for (const auto &pair : parsed) {
+    HeaderNode *next = nullptr;
+    long tmp = 0;
+    if (pair.first.compare("Protocol") == 0){
+      /* Continue parsing protocol */
+    }
+    else if (pair.first.compare(fieldName[HeaderNode::DATE]) == 0){
+      tmp = convertToUnixEpoch(pair.second);
+      if (tmp == -1){
+        throw std::runtime_error(std::string(__func__) + ": unknown time format");
+      }
+      next = new HeaderNode(pair.first, std::to_string(tmp));
+    }
+    else if (pair.first.compare(fieldName[HeaderNode::CONTENT_LENGTH]) == 0 ||
+             pair.first.compare(fieldName[HeaderNode::MAX_FORWARDS]) == 0 ||
+             pair.first.compare(fieldName[HeaderNode::AGE]) == 0 ||
+             pair.first.compare(fieldName[HeaderNode::RETRY_AFTER]) == 0 ||
+             pair.first.compare(fieldName[HeaderNode::ACCESS_CONTROL_MAX_AGE]) == 0
+    ){
+      next = new HeaderNode(pair.first, stoi(pair.second));
+    }
+    else if (pair.first.compare(fieldName[HeaderNode::EXPECT]) == 0 ||
+             pair.first.compare(fieldName[HeaderNode::IF_MODIFIED_SINCE]) == 0 ||
+             pair.first.compare(fieldName[HeaderNode::IF_UNMODIFIED_SINCE]) == 0 ||
+             pair.first.compare(fieldName[HeaderNode::STRICT_TRANSPORT_SECURITY]) == 0 ||
+             pair.first.compare(fieldName[HeaderNode::X_XSS_PROTECTION]) == 0
+    ){
+      next = new HeaderNode(pair.first, (!pair.second.compare("true") || !pair.second.compare("True") || !pair.second.compare("TRUE")));
+    }
+    else {
+      next = new HeaderNode(pair.first, pair.second);
+    }
+    if (next == nullptr) throw std::runtime_error(std::string(__func__) + ": fail to create next node");
+    if (this->node == nullptr){
+      this->node = next;
+    }
+    else {
+      next->next = this->node;
+      this->node = next;
+    }
+  }
+}
