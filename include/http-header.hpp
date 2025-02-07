@@ -89,6 +89,13 @@ class HTTPHeader {
     HTTPHeader(const std::string httpHeaderPayload);
 
     /**
+     * @brief Overloaded custom constructor for Complete HTTP Header Payload.
+     *
+     * This method is responsible for create new HTTP Header wich automatically parse the input to linked list form.
+     */
+    HTTPHeader(const char *httpHeaderPayload);
+
+    /**
     * @brief Destructor for HTTP Header class.
     *
     * Release all available nodes.

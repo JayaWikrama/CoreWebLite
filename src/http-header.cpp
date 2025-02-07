@@ -165,3 +165,12 @@ HTTPHeader::HTTPHeader(const std::string httpHeaderPayload){
     }
   }
 }
+
+/**
+ * @brief Overloaded custom constructor for Complete HTTP Header Payload.
+ *
+ * This method is responsible for create new HTTP Header wich automatically parse the input to linked list form.
+ */
+HTTPHeader::HTTPHeader(const char *httpHeaderPayload){
+  HTTPHeader(std::string(httpHeaderPayload));
+}
