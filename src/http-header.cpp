@@ -174,3 +174,19 @@ HTTPHeader::HTTPHeader(const std::string httpHeaderPayload){
 HTTPHeader::HTTPHeader(const char *httpHeaderPayload){
   HTTPHeader(std::string(httpHeaderPayload));
 }
+
+/**
+ * @brief Destructor for HTTP Header class.
+ *
+ * Release all available nodes.
+ */
+HTTPHeader::~HTTPHeader(){
+  if (this->node == nullptr) return;
+  HeaderNode *next = nullptr;
+  while (this->node->next != nullptr){
+    next = this->node->next;
+    delete this->node;
+    this->node = next;
+  }
+  delete this->node;
+}
